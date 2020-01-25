@@ -5,9 +5,12 @@ A simple API Wrapper around the Byte.co app. Single dependancy, utilizing node-f
 ##setup
 
 if you use npm,
-> npm install byte-api
+
+```npm install byte-api```
+
 if you use yarn,
-> yarn add byte-api
+
+```yarn add byte-api```
 
 
 ## Code

@@ -1,9 +1,11 @@
 {
   "name": "byte-api",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "src/index.js",
   "author": "Furry",
   "license": "MIT",
+  "homepage": "https://github.com/Furry/byte-api",
+  "url": "https://github.com/Furry/byte-api",
   "dependencies": {
     "node-fetch": "^2.6.0"
   }
