@@ -1,0 +1,10 @@
+{
+  "name": "byte-api",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "Furry",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
