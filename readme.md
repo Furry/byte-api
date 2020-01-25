@@ -2,7 +2,7 @@
 
 A simple API Wrapper around the Byte.co app. Single dependancy, utilizing node-fetch as the http client.
 
-##setup
+## setup
 
 if you use npm,
 
