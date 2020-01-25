@@ -5,23 +5,82 @@ module.exports = class HttpHandler extends EventEmitter {
     constructor(authorization, options = {}) {
         super()
         this.baseurl = "https://api.byte.co/"
-        this.Authorization = authorization
+        this.authorization = authorization
     }
 
     baseRequest = (body, url, method) => {
-        fetch(this.baseurl+url, {
-            method: method,
-            body: JSON.parse(body),
-            headers: { "Content-Type": "application/json", "Authorization": authorization }
-        })
-        .then(res => res.json())
-        .then(json => {
-            return this.responseHandler(json) 
+        return new Promise((resolve, reject) => {
+            fetch(this.baseurl+url, {
+                method: method,
+                body: JSON.stringify(body),
+                headers: { "Content-Type": "application/json", "authorization": this.authorization }
+            })
+            .then(res => res.json())
+            .then(json => {
+                return resolve(this.responseHandler(json)) 
+            })
         })
     }
 
-    responseHandler = (response) => {
-        console.log(response)
+    baseGetRequest = (url) => {
+        return new Promise((resolve, reject) => {
+            fetch(this.baseurl+url, {
+                method: "GET",
+                headers: { "Content-Type": "application/json", "authorization": this.authorization },
+                "user-agent": "byte/0.3.52 (co.byte@trials; v55; Android 22/5.1.1) okhttp/4.3.1"
+            })
+            .then(res => res.json())
+            .then(json => {
+                let data = this.responseHandler(json, "posts");
+                resolve(data); 
+            })
+        })
+    }
+
+    basePutRequest = (url) => {
+        return new Promise((resolve, reject) => {
+            fetch(this.baseurl+url, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json", "authorization": this.authorization },
+                "user-agent": "byte/0.3.52 (co.byte@trials; v55; Android 22/5.1.1) okhttp/4.3.1"
+            })
+            .then(res => res.json())
+            .then(json => {
+                let data = this.responseHandler(json);
+                resolve(data); 
+            })
+        })
+    }
+
+    basePostRequest = (url) => {
+        return new Promise((resolve, reject) => {
+            fetch(this.baseurl+url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "authorization": this.authorization },
+                "user-agent": "byte/0.3.52 (co.byte@trials; v55; Android 22/5.1.1) okhttp/4.3.1"
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                let data = this.responseHandler(json);
+                resolve(data); 
+            })
+        })
+    }
+
+    responseHandler = (response, method) => {
+        
+        let PostCon = require("./post")
+
+        if (method == "posts") {
+            let result = [];
+            response.data.posts.forEach(post => {
+                post.client = this
+                result.push(new PostCon(post))
+            })
+            return result
+        }
+        
         return response
     }
 
@@ -47,6 +106,12 @@ module.exports = class HttpHandler extends EventEmitter {
      */
     setBio = (message) => {
         return this.baseRequest({"bio": message}, "account/me", "PUT")
+    }
+
+    getGlobalFeed = async () => {
+        let res = await this.baseGetRequest("feed/global")
+        .catch((err) => { throw err })
+        return res
     }
 
 }
