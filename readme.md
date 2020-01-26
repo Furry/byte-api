@@ -1,8 +1,10 @@
-[![Discord](https://discordapp.com/api/guilds/671011392173637653/embed.png)](https://discord.gg/n4yqTrt)
+
 
 # Byte-API
 
 A simple API Wrapper around the Byte.co app. Single dependancy, utilizing node-fetch as the http client.
+
+## 2 [Join us on discord](https://discord.gg/n4yqTrt)
 
 ## setup
 
@@ -87,3 +89,5 @@ I'd love for people to help out!
 I have no standards for accepting PRs or issues. Have a neat idea? impliment it and send it over, and if it works well I'll approve. Though I might reformat it to fit the style of the rest of the repository.
 
 If you're better at Javascript then me, feel free to make corrections or tell me how I can do something better!
+
+Some1 please fix this readme file it's so ugly
