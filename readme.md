@@ -1,3 +1,17 @@
+<div align="center">
+    <br />
+    <p>
+
+    </p>
+    <br />
+
+    <p>
+    <a href="https://discord.gg/n4yqTrt"><img src="https://discordapp.com/api/guilds/671011392173637653/embed.png" alt="Discord server" /></a>
+    <a href="https://www.npmjs.com/package/byte-api"><img src="https://img.shields.io/npm/v/byte-api.svg?maxAge=3600" alt="NPM version" /></a>
+    <a href="https://www.npmjs.com/package/byte-api"><img src="https://img.shields.io/npm/v/byte-api.svg?maxAge=3600" alt="NPM version" /></a>
+    </p>
+</div>
+
 # Byte-API
 
 A simple API Wrapper around the Byte.co app. Single dependancy, utilizing node-fetch as the http client.
