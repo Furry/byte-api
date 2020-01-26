@@ -1,12 +1,15 @@
+const HttpsProxyAgent = require("https-proxy-agent")
 const EventEmitter = require("events")
 const fetch = require("node-fetch")
 const Errors = require("./error")
 
+
 module.exports = class HttpHandler extends EventEmitter {
-    constructor(authorization, options = {}) {
+    constructor(authorization, config = {}) {
         super()
         this.baseurl = "https://api.byte.co/"
         this.authorization = authorization
+        this.config = config
     }
 
     baseRequest(url, method, resulttype, body) {
@@ -16,13 +19,14 @@ module.exports = class HttpHandler extends EventEmitter {
             options["method"] = method
             options["headers"] = { "Content-Type": "application/json", "authorization": this.authorization }
             if (body) options["body"] = JSON.stringify(body)
+            if (this.config.proxy) options["agent"] = new HttpsProxyAgent(`http://${this.config.proxy}`) 
 
             fetch(this.baseurl+url, options)
             .then(async (res) => {
                 switch(res.status) {
                     case 404: reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
                     case 429: reject(new Errors.APIError("Too Many Requests. You're being rate limited")); break
-                    
+
                     case 200:
                         res.json()
                         .then((json) => resolve(this.responseHandler(json, resulttype)))

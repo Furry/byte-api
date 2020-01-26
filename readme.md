@@ -2,7 +2,7 @@
 
 # Byte-API
 
-A simple API Wrapper around the Byte.co app. Single dependancy, utilizing node-fetch as the http client.
+A simple API Wrapper around the Byte.co app, utilizing node-fetch as the http client w\ proxy support.
 
 ## [Join us on discord](https://discord.gg/n4yqTrt)
 
