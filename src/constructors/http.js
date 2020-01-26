@@ -9,7 +9,7 @@ module.exports = class HttpHandler extends EventEmitter {
         this.authorization = authorization
     }
 
-    baseRequest = (url, method, resulttype, body) => {
+    baseRequest(url, method, resulttype, body) {
         return new Promise((resolve, reject) => {
 
             let options = []
@@ -37,7 +37,7 @@ module.exports = class HttpHandler extends EventEmitter {
         })
     }
 
-    responseHandler = (response, resulttype) => {
+    responseHandler(response, resulttype) {
         
         let PostCon = require("./post")
 
@@ -61,7 +61,7 @@ module.exports = class HttpHandler extends EventEmitter {
      * setProfileColor(scheme)
      * .then((res) => console.log(res))
      */
-    setProfileColor = (scheme) => {
+    setProfileColor(scheme) {
         return this.baseRequest("account/me", "PUT", "profile", {"colorScheme": scheme})
     }
 
@@ -74,7 +74,7 @@ module.exports = class HttpHandler extends EventEmitter {
      * setBio("the one and only hackerman ;)")
      * .then((res) => console.log(res))
      */
-    setBio = (message) => {
+    setBio(message) {
         return this.baseRequest("account/me", "PUT", "profile", {"bio": message})
     }
 
@@ -87,7 +87,7 @@ module.exports = class HttpHandler extends EventEmitter {
      * subscribe()
      * .then((res) => console.log(res))
      */
-    subscribe = (id) => {
+    subscribe(id) {
         return this.baseRequest(`account/id/${id}/follow`, "PUT", "user")
     }
 
@@ -99,7 +99,7 @@ module.exports = class HttpHandler extends EventEmitter {
      * getGlobalFeed()
      * .then((res) => res.forEach((post) => post.like()))
      */
-    getGlobalFeed = () => {
+    getGlobalFeed() {
         return this.baseRequest("feed/global", "GET", "post")
     }
 
