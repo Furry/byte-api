@@ -9,7 +9,7 @@ module.exports = class post {
      * <post>.like()
      * .then((res) => console.log(res))
      */
-    like = () => {
+    like() {
         return new Promise((resolve, reject) => {
             this.client.baseRequest(`post/id/${this.id}/feedback/like`, "PUT", "postaction")
             .catch((err) => reject(err))
@@ -23,7 +23,7 @@ module.exports = class post {
      * <post>.dislike()
      * .then((res) => console.log(res))
      */
-    unlike = () => {
+    unlike() {
         return new Promise((resolve, reject) => {
             this.client.baseRequest(`post/id/${this.id}/feedback/like`, "DELETE", "postaction")
             .catch((err) => reject(err))
@@ -36,7 +36,7 @@ module.exports = class post {
      * <post>.rebyte()
      * .then((res) => console.log(res))
      */
-    rebyte = () => {
+    rebyte() {
         return new Promise((resolve, reject) => {
             this.client.baseRequest(`post/id/${this.id}/loop`, "POST", "postaction")
             .catch((err) => reject(err))
@@ -50,7 +50,7 @@ module.exports = class post {
      * @example
      * <post>.comment("Wow, nice vid <3").then((res) => console.log(res))
      */
-    comment = (comment) => {
+    comment(comment) {
         return new Promise((resolve, reject) => {
             // stubId is the timestamp in MS that the comment was added.
             this.client.baseRequest(`post/id/${this.id}/feedback/comment`, "POST", "comment", {"body": comment, "postID": this.id, stubId: Date.now()})
