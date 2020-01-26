@@ -1,16 +1,4 @@
-<div align="center">
-    <br />
-    <p>
-
-    </p>
-    <br />
-
-    <p>
-    <a href="https://discord.gg/n4yqTrt"><img src="https://discordapp.com/api/guilds/671011392173637653/embed.png" alt="Discord server" /></a>
-    <a href="https://www.npmjs.com/package/byte-api"><img src="https://img.shields.io/npm/v/byte-api.svg?maxAge=3600" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/byte-api"><img src="https://img.shields.io/npm/v/byte-api.svg?maxAge=3600" alt="NPM version" /></a>
-    </p>
-</div>
+[![Discord](https://discordapp.com/api/guilds/671011392173637653/embed.png)](https://discord.gg/n4yqTrt)
 
 # Byte-API
 
