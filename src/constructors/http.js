@@ -8,6 +8,12 @@ module.exports = class HttpHandler extends EventEmitter {
         this.authorization = authorization
     }
 
+    authenticate = () => {
+        return new Promise((resolve, reject) => {
+            fetch()
+        })
+    }
+
     baseRequest = (body, url, method) => {
         return new Promise((resolve, reject) => {
             fetch(this.baseurl+url, {
@@ -61,7 +67,6 @@ module.exports = class HttpHandler extends EventEmitter {
             })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 let data = this.responseHandler(json);
                 resolve(data); 
             })
@@ -106,6 +111,10 @@ module.exports = class HttpHandler extends EventEmitter {
      */
     setBio = (message) => {
         return this.baseRequest({"bio": message}, "account/me", "PUT")
+    }
+
+    subscribe = (id) => {
+        return this.basePutRequest(`account/id/${id}/follow`)
     }
 
     getGlobalFeed = async () => {
