@@ -7,6 +7,11 @@
   "homepage": "https://github.com/Furry/byte-api",
   "url": "https://github.com/Furry/byte-api",
   "dependencies": {
+    "colors": "^1.4.0",
+    "docdash": "^1.1.1",
     "node-fetch": "^2.6.0"
+  },
+  "scripts": {
+    "generate-docs": "jsdoc ./src -t node_modules/docdash"
   }
 }

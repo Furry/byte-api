@@ -3,7 +3,7 @@ const fetch = require("node-fetch")
 /**
  * Checks a username's avability. Does not require an access token.
  * 
- * @param name The name you'd like to check.
+ * @param {string} name The name you'd like to check.
  * 
  * @example
  * checkname("hackerman")

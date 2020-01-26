@@ -32,6 +32,31 @@ Client.setBio("Just a random Bio") // Changes your BIO.
 })
 ```
 
+Example of a follow + like + subscribe bot:
+```js
+const Byte = require("byte-api");
+
+const Client = new Byte.Client("YourAuthorizationToken");
+
+let items = ["Nice!", "cool", "welcome", "awesome", "^~^"]
+
+
+let i = 0;
+;(async function container() {
+    let posts = await Client.getGlobalFeed()
+    for (let post of posts) {
+        i++;
+        await Client.subscribe(post.authorID)
+        console.log(await post.rebyte());
+        console.log(await post.like());
+        await post.comment(items[Math.floor(Math.random()*items.length)])
+        await new Promise((resolve, reject) => setTimeout(resolve, 1500))
+        console.log(i)
+    }
+    container();
+})();
+```
+
 There are some exceptions though, they're accessed in a different way.
 ```js
 const Byte = require("byte-api");

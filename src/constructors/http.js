@@ -1,5 +1,6 @@
 const EventEmitter = require("events")
-const fetch = require("node-fetch");
+const fetch = require("node-fetch")
+const Errors = require("./error")
 
 module.exports = class HttpHandler extends EventEmitter {
     constructor(authorization, options = {}) {
@@ -8,76 +9,39 @@ module.exports = class HttpHandler extends EventEmitter {
         this.authorization = authorization
     }
 
-    authenticate = () => {
+    baseRequest = (url, method, resulttype, body) => {
         return new Promise((resolve, reject) => {
-            fetch()
+
+            let options = []
+            options["method"] = method
+            options["headers"] = { "Content-Type": "application/json", "authorization": this.authorization }
+            if (body) options["body"] = JSON.stringify(body)
+
+            fetch(this.baseurl+url, options)
+            .then(async (res) => {
+                switch(res.status) {
+                    case 404: reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
+
+                    case 200:
+                        res.json()
+                        .then((json) => resolve(this.responseHandler(json, resulttype)))
+                    break
+
+                    default: 
+                        console.log(res.status)
+                        reject(new Errors.APIError("Something went wrong..")) // Fallback for now.
+                    break
+                }
+            })
+
         })
     }
 
-    baseRequest = (body, url, method) => {
-        return new Promise((resolve, reject) => {
-            fetch(this.baseurl+url, {
-                method: method,
-                body: JSON.stringify(body),
-                headers: { "Content-Type": "application/json", "authorization": this.authorization }
-            })
-            .then(res => res.json())
-            .then(json => {
-                return resolve(this.responseHandler(json)) 
-            })
-        })
-    }
-
-    baseGetRequest = (url) => {
-        return new Promise((resolve, reject) => {
-            fetch(this.baseurl+url, {
-                method: "GET",
-                headers: { "Content-Type": "application/json", "authorization": this.authorization },
-                "user-agent": "byte/0.3.52 (co.byte@trials; v55; Android 22/5.1.1) okhttp/4.3.1"
-            })
-            .then(res => res.json())
-            .then(json => {
-                let data = this.responseHandler(json, "posts");
-                resolve(data); 
-            })
-        })
-    }
-
-    basePutRequest = (url) => {
-        return new Promise((resolve, reject) => {
-            fetch(this.baseurl+url, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json", "authorization": this.authorization },
-                "user-agent": "byte/0.3.52 (co.byte@trials; v55; Android 22/5.1.1) okhttp/4.3.1"
-            })
-            .then(res => res.json())
-            .then(json => {
-                let data = this.responseHandler(json);
-                resolve(data); 
-            })
-        })
-    }
-
-    basePostRequest = (url) => {
-        return new Promise((resolve, reject) => {
-            fetch(this.baseurl+url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "authorization": this.authorization },
-                "user-agent": "byte/0.3.52 (co.byte@trials; v55; Android 22/5.1.1) okhttp/4.3.1"
-            })
-            .then(res => res.json())
-            .then(json => {
-                let data = this.responseHandler(json);
-                resolve(data); 
-            })
-        })
-    }
-
-    responseHandler = (response, method) => {
+    responseHandler = (response, resulttype) => {
         
         let PostCon = require("./post")
 
-        if (method == "posts") {
+        if (resulttype == "post") {
             let result = [];
             response.data.posts.forEach(post => {
                 post.client = this
@@ -85,11 +49,11 @@ module.exports = class HttpHandler extends EventEmitter {
             })
             return result
         }
-        
         return response
     }
 
     /**
+     * Sets your profile color
      * @param {number} scheme The color you want your profile as. 1 to 17
      * @returns {Promise<object>} the HTTP response.
      * 
@@ -98,10 +62,11 @@ module.exports = class HttpHandler extends EventEmitter {
      * .then((res) => console.log(res))
      */
     setProfileColor = (scheme) => {
-        return this.baseRequest({"colorScheme": scheme}, "account/me", "PUT")
+        return this.baseRequest("account/me", "PUT", "profile", {"colorScheme": scheme})
     }
 
     /**
+     * Sets your Bio
      * @param {string} message What you want your new BIO as.
      * @returns {promise<object>} the HTTP response.
      * 
@@ -110,17 +75,32 @@ module.exports = class HttpHandler extends EventEmitter {
      * .then((res) => console.log(res))
      */
     setBio = (message) => {
-        return this.baseRequest({"bio": message}, "account/me", "PUT")
+        return this.baseRequest("account/me", "PUT", "profile", {"bio": message})
     }
 
+    /**
+     * Subscribes to a user
+     * @param {string} id User's ID to subscribe to.
+     * @returns {promise<object>} the HTTP response.
+     * 
+     * @example
+     * subscribe()
+     * .then((res) => console.log(res))
+     */
     subscribe = (id) => {
-        return this.basePutRequest(`account/id/${id}/follow`)
+        return this.baseRequest(`account/id/${id}/follow`, "PUT", "user")
     }
 
-    getGlobalFeed = async () => {
-        let res = await this.baseGetRequest("feed/global")
-        .catch((err) => { throw err })
-        return res
+    /**
+     * Returns all posts in your global feed.
+     * @returns {array<posts>}
+     * 
+     * @example
+     * getGlobalFeed()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getGlobalFeed = () => {
+        return this.baseRequest("feed/global", "GET", "post")
     }
 
 }
