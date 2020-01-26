@@ -1,11 +1,12 @@
 {
   "name": "byte-api",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "main": "src/index.js",
   "author": "Furry",
   "license": "MIT",
   "homepage": "https://github.com/Furry/byte-api",
   "url": "https://github.com/Furry/byte-api",
+  "keywords": ["byte", "byte-api", "api", "vine2", "vine", "Bytejs", "tiktok"],
   "dependencies": {
     "node-fetch": "^2.6.0"
   },

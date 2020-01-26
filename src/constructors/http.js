@@ -21,7 +21,8 @@ module.exports = class HttpHandler extends EventEmitter {
             .then(async (res) => {
                 switch(res.status) {
                     case 404: reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
-
+                    case 429: reject(new Errors.APIError("Too Many Requests. You're being rate limited")); break
+                    
                     case 200:
                         res.json()
                         .then((json) => resolve(this.responseHandler(json, resulttype)))
@@ -40,16 +41,50 @@ module.exports = class HttpHandler extends EventEmitter {
     responseHandler(response, resulttype) {
         
         let PostCon = require("./post")
+        let UserCon = require("./user")
+        let CommentCon = require("./comment")
+
+        if (!response.data || !Object.keys(response.data)[0]) return response
+        let result = []
 
         if (resulttype == "post") {
-            let result = [];
             response.data.posts.forEach(post => {
                 post.client = this
                 result.push(new PostCon(post))
             })
             return result
+
+
+        } 
+
+        if (resulttype == "user") {
+            if (response.data.accounts || response.data.accounts[0]) {
+                response.data.accounts.forEach(user => {
+                    user.client = this
+                    result.push(new UserCon(user))
+                })
+                return result
+            } else {
+                response.client = this
+                return new UserCon(response.data)
+            }
         }
-        return response
+
+        if (resulttype == "comment") {
+            if (response.data[0]) {
+                response.data.accounts.forEach(comment => {
+                    comment.client = this
+                    result.push(new CommentCon(comment))
+                })
+                return result
+            } else {
+                response.client = this
+                return new CommentCon(response.data)
+            }
+        }
+
+        else return response
+
     }
 
     /**
@@ -88,6 +123,7 @@ module.exports = class HttpHandler extends EventEmitter {
      * .then((res) => console.log(res))
      */
     subscribe(id) {
+        console.log("<client>.subscribe() is DEPRECIATED. Please use <user>.subscribe, or <post>.author.subscribe()")
         return this.baseRequest(`account/id/${id}/follow`, "PUT", "user")
     }
 
@@ -101,6 +137,21 @@ module.exports = class HttpHandler extends EventEmitter {
      */
     getGlobalFeed() {
         return this.baseRequest("feed/global", "GET", "post")
+    }
+
+    /**
+     * Searches by name, and returns an array of User objects.
+     * @param {string} name The name you want to search.
+     * @returns {promise<array>}
+     * 
+     * @example
+     * searchByName("cat")
+     * .then((res) => {
+     * res.forEach((item) => console.log(item.id))
+     * })
+     */
+    searchByName(name) {
+        return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
 }

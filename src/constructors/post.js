@@ -1,6 +1,10 @@
+const UserCon = require("./user")
+
 module.exports = class post {
     constructor(post) {
         Object.assign(this, post)
+
+        this.author = new UserCon({id: this.authorID, client: this.client}) 
     }
 
     /**
@@ -58,5 +62,7 @@ module.exports = class post {
             .then((res) => resolve(res))
         })
     }
+
+
 
 }
