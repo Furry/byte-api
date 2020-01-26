@@ -4,7 +4,7 @@
 
 A simple API Wrapper around the Byte.co app. Single dependancy, utilizing node-fetch as the http client.
 
-## 2 [Join us on discord](https://discord.gg/n4yqTrt)
+## [Join us on discord](https://discord.gg/n4yqTrt)
 
 ## setup
 
