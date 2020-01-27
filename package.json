@@ -16,10 +16,14 @@
     "tiktok"
   ],
   "dependencies": {
+    "bull": "^3.12.1",
     "https-proxy-agent": "^4.0.0",
     "node-fetch": "^2.6.0"
   },
   "scripts": {
     "generate-docs": "jsdoc ./src -t node_modules/docdash"
+  },
+  "devDependencies": {
+    "byte-auth": "^1.0.2"
   }
 }

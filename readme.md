@@ -50,7 +50,7 @@ let i = 0;
     let posts = await Client.getGlobalFeed()
     for (let post of posts) {
         i++;
-        await Client.subscribe(post.authorID)
+        await post.author.subscribe(post.authorID)
         console.log(await post.rebyte());
         console.log(await post.like());
         await post.comment(items[Math.floor(Math.random()*items.length)])
