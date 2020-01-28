@@ -88,6 +88,7 @@ class HttpHandler extends EventEmitter {
             if (response.data.posts[0] && response.data.accounts) {
                 response.data.posts.forEach((post) => {
                     post.client = this
+                    response.data.accounts[post.authorID].client = this
                     result.push(new PostCon(post, response.data.accounts[post.authorID]))
                 })
                 return result
