@@ -67,12 +67,12 @@ class Post {
         })
     }
     /**
-     * Rebytes a post.
+     * Loops a post.
      * @example
-     * <post>.rebyte()
+     * <post>.loop()
      * .then((res) => console.log(res))
      */
-    rebyte() {
+    loop() {
         return new Promise((resolve, reject) => {
             this.client.baseRequest(`post/id/${this.id}/loop`, "POST", "postaction")
             .catch((err) => reject(err))
