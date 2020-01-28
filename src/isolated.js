@@ -9,7 +9,7 @@ const fetch = require("node-fetch")
  * checkname("hackerman")
  * .then((res) => console.log(res.success))
  */
-module.exports.checkName = function(name) {
+function checkName(name) {
     return fetch("https://api.byte.co/account/register/precheck", {
         method: "post",
         body: `{"username": "${name}"}`,
@@ -17,3 +17,5 @@ module.exports.checkName = function(name) {
     })
     .then(res => res.json())
 }
+
+module.exports.checkName = checkName
