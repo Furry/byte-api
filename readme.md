@@ -82,10 +82,8 @@ You can get a token by sniffing the http traffic of the app. in every request, t
 ## To-Do
 
 * Abide by x-ratelimit.
-* Find a way to allow login just using Username and Password.
 * Add more endpoints.
 * Add paging through feed.
-* Create classes for posts, users, and all those other things.
 * add a d.ts file
 
 ## Contributions
