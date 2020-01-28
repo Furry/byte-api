@@ -179,6 +179,9 @@ class HttpHandler extends EventEmitter {
         return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
+    createPost(path) {
+        
+    }
 }
 
 
