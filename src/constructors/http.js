@@ -45,7 +45,7 @@ module.exports = class HttpHandler extends EventEmitter {
     responseHandler(response, resulttype) {
         
         let PostCon = require("./post")
-        let UserCon = require("./user")
+        let UserCon = require("./User")
         let CommentCon = require("./comment")
 
         if (!response.data || !Object.keys(response.data)[0]) return response
@@ -71,6 +71,16 @@ module.exports = class HttpHandler extends EventEmitter {
             } else {
                 response.client = this
                 return new UserCon(response.data)
+            }
+        }
+
+        if (resulttype == "postuser") {
+            if (response.data.posts[0] && response.data.accounts) {
+                response.data.posts.forEach((post) => {
+                    post.client = this
+                    result.push(new PostCon(post, response.data.accounts[post.authorID]))
+                })
+                return result
             }
         }
 
@@ -140,7 +150,7 @@ module.exports = class HttpHandler extends EventEmitter {
      * .then((res) => res.forEach((post) => post.like()))
      */
     getGlobalFeed() {
-        return this.baseRequest("feed/global", "GET", "post")
+        return this.baseRequest("feed/global", "GET", "postuser")
     }
 
     /**

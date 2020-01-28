@@ -1,4 +1,27 @@
-module.exports = class user {
+/**
+ * @typedef {object} User
+ * @property {string} id
+ * @property {boolean} isChannel
+ * @property {number} registrationDate Timestamp for the time of registration.
+ * @property {string} username
+ * @property {string} avatarURL
+ * @property {string} backgroundColor
+ * @property {string} foregroundColor
+ * @property {number} followerCount
+ * @property {number} followingCount
+ * @property {number} loopCount
+ * @property {number} loopsConsumedCount
+ * @property {boolean} isFollowing
+ * @property {boolean} isFollowed
+ * @property {boolean} isBlocked
+ */
+
+ /**
+  * The User class, for every Byte user.
+  * @class
+  * @param {...User}
+  */
+module.exports = class User {
     constructor(user) {
         Object.assign(this, user)
     }

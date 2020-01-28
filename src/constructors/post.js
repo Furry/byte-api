@@ -1,10 +1,18 @@
-const UserCon = require("./user")
+const UserCon = require("./User")
 
+/**
+ * @typedef {object} Post
+ * @property {string} id
+ * @property {number} type
+ * @property {string} authorID
+ * @property {string} caption
+ * @
+ */
 module.exports = class post {
-    constructor(post) {
+    constructor(post, user) {
         Object.assign(this, post)
 
-        this.author = new UserCon({id: this.authorID, client: this.client}) 
+        this.author = new UserCon(user) 
     }
 
     /**
