@@ -1,12 +1,17 @@
+<h1 align="center">
+  <br>
+  Byte-API
+  <br>
+</h1>
 
+<h4 align="center">A simple API Wrapper around the Byte.co app, utilizing node-fetch as the http client w\ proxy support.</h4>
 
-# Byte-API
+<p align="center">
+  <a href="https://discord.gg/n4yqTrt">
+      <img src="https://i.imgur.com/ECEsP5l.png">
+  </a>
 
-A simple API Wrapper around the Byte.co app, utilizing node-fetch as the http client w\ proxy support.
-
-## [Join us on discord](https://discord.gg/n4yqTrt)
-
-## setup
+## Setup
 
 if you use npm,
 
@@ -51,7 +56,7 @@ let i = 0;
     for (let post of posts) {
         i++;
         await post.author.subscribe(post.authorID)
-        console.log(await post.rebyte());
+        console.log(await post.loop());
         console.log(await post.like());
         await post.comment(items[Math.floor(Math.random()*items.length)])
         await new Promise((resolve, reject) => setTimeout(resolve, 1500))
@@ -71,17 +76,17 @@ Byte.Isolated.checkName("potato") // Checks a usernames avability without the ne
 
 ## Getting a Token
 
-You can get a token by sniffing the http traffic of the app. in every request, there will be a header saying "Authorization: Token", copy that token and use it to logon. To do this, I used HttpCanary (From the Android App Store) and Nox App Player.
+You can get a token by sniffing the http traffic of the app. in every request, there will be a header saying "Authorization: Token", copy that token and use it to logon. To do this, I used HttpCanary (From the Android App Store) and Nox App Player. 
 
 
 ## To-Do
 
-- Abide by x-ratelimit.
-- Find a way to allow login just using Username and Password.
-- Add more endpoints.
-- Add paging through feed.
-- Create classes for posts, users, and all those other things.
-- add a d.ts file
+* Abide by x-ratelimit.
+* Find a way to allow login just using Username and Password.
+* Add more endpoints.
+* Add paging through feed.
+* Create classes for posts, users, and all those other things.
+* add a d.ts file
 
 ## Contributions
 I'd love for people to help out!
@@ -89,5 +94,3 @@ I'd love for people to help out!
 I have no standards for accepting PRs or issues. Have a neat idea? impliment it and send it over, and if it works well I'll approve. Though I might reformat it to fit the style of the rest of the repository.
 
 If you're better at Javascript then me, feel free to make corrections or tell me how I can do something better!
-
-Some1 please fix this readme file it's so ugly
