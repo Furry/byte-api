@@ -1,4 +1,21 @@
-module.exports = class {
+/**
+ * @typedef Comment
+ * @param {string} id The Comment ID
+ * @param {string} postID The Post ID
+ * @param {string} authorID The Author's ID
+ * @param {string} body The Comment's text.
+ * @param {number} date The Created Timestamp
+ */
+
+ /**
+  * @class
+  * @param {...Comment}
+  */
+class Comment {
+    /**
+     * The base Comment Class.
+     * @param {object} comment Raw Comment Data 
+     */
     constructor(comment) {
         Object.assign(this, comment)
     }
@@ -26,3 +43,5 @@ module.exports = class {
     }
 
 }
+
+module.exports = Comment

@@ -1,4 +1,48 @@
-const HttpsProxyAgent = require("https-proxy-agent")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>constructors/Http.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">constructors/Http.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const HttpsProxyAgent = require("https-proxy-agent")
 const EventEmitter = require("events")
 const fetch = require("node-fetch")
 const Errors = require("./Error")
@@ -85,7 +129,7 @@ class HttpHandler extends EventEmitter {
         }
 
         if (resulttype == "postuser") {
-            if (response.data.posts[0] && response.data.accounts) {
+            if (response.data.posts[0] &amp;&amp; response.data.accounts) {
                 response.data.posts.forEach((post) => {
                     post.client = this
                     result.push(new PostCon(post, response.data.accounts[post.authorID]))
@@ -114,7 +158,7 @@ class HttpHandler extends EventEmitter {
     /**
      * Sets your profile color
      * @param {number} scheme The color you want your profile as. 1 to 17
-     * @returns {Promise<object>} the HTTP response.
+     * @returns {Promise&lt;object>} the HTTP response.
      * 
      * @example
      * setProfileColor(scheme)
@@ -127,7 +171,7 @@ class HttpHandler extends EventEmitter {
     /**
      * Sets your Bio
      * @param {string} message What you want your new BIO as.
-     * @returns {promise<object>} the HTTP response.
+     * @returns {promise&lt;object>} the HTTP response.
      * 
      * @example
      * setBio("the one and only hackerman ;)")
@@ -140,20 +184,20 @@ class HttpHandler extends EventEmitter {
     /**
      * Subscribes to a user
      * @param {string} id User's ID to subscribe to.
-     * @returns {promise<object>} the HTTP response.
+     * @returns {promise&lt;object>} the HTTP response.
      * 
      * @example
      * subscribe()
      * .then((res) => console.log(res))
      */
     subscribe(id) {
-        console.log("<client>.subscribe() is DEPRECIATED. Please use <user>.subscribe, or <post>.author.subscribe()")
+        console.log("&lt;client>.subscribe() is DEPRECIATED. Please use &lt;user>.subscribe, or &lt;post>.author.subscribe()")
         return this.baseRequest(`account/id/${id}/follow`, "PUT", "user")
     }
 
     /**
      * Returns all posts in your global feed.
-     * @returns {array<posts>}
+     * @returns {array&lt;posts>}
      * 
      * @example
      * getGlobalFeed()
@@ -166,7 +210,7 @@ class HttpHandler extends EventEmitter {
     /**
      * Searches by name, and returns an array of User objects.
      * @param {string} name The name you want to search.
-     * @returns {promise<array>}
+     * @returns {promise&lt;array>}
      * 
      * @example
      * searchByName("cat")
@@ -181,4 +225,28 @@ class HttpHandler extends EventEmitter {
 }
 
 
-module.exports = HttpHandler
+module.exports = HttpHandler</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Jan 27 2020 22:36:41 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

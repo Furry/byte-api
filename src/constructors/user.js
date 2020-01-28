@@ -21,7 +21,7 @@
   * @class
   * @param {...User}
   */
-module.exports = class User {
+class User {
     constructor(user) {
         Object.assign(this, user)
     }
@@ -63,3 +63,5 @@ module.exports = class User {
     }
 
 }
+
+module.exports = User

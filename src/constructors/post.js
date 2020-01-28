@@ -2,13 +2,37 @@ const UserCon = require("./User")
 
 /**
  * @typedef {object} Post
- * @property {string} id
- * @property {number} type
- * @property {string} authorID
- * @property {string} caption
- * @
+ * @property {string} id The Post's ID
+ * @property {number} type Unknown
+ * @property {string} authorID The Creator Of The Post
+ * @property {string} caption The Post's Text/Caption
+ * @property {boolean} allowCuration Unknown
+ * @property {boolean} allowRemix Unknown
+ * @property {string} category The category of the post.
+ * @property {array<object>} mentions The users the post mentions.
+ * @property {number} date The Timestamp Creation Date of the post.
+ * @property {string} videoSrc The Direct URL To The Video File.
+ * @property {string} thumbSrc The URL To The Thumbnail.  
+ * @property {number} commentCount The Amount Of Comments On The Post.
+ * @property {number} likeCount The Amount Of Likes On The Post.
+ * @property {boolean} likedByMe If the post is liked by the Client or not.
+ * @property {number} loopCount The amount of times the post has been looped.
+ * @property {boolean} rebytedByMe If the post has been rebyted by the client.
+ * @property {Client} client The Client.
+ * @property {User} author The author of the post.
  */
-module.exports = class post {
+
+ /**
+  * The Post Class.
+  * @class
+  * @property {...Post}
+  */
+class Post {
+    /**
+     * The Post Constructor
+     * @param {object} post The raw post data. 
+     * @param {User} user The author of the post.
+     */
     constructor(post, user) {
         Object.assign(this, post)
 
@@ -71,6 +95,6 @@ module.exports = class post {
         })
     }
 
-
-
 }
+
+module.exports = Post
