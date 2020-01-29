@@ -68,6 +68,7 @@ class Post {
         .then(res => resolve(res))
     })
   }
+
   /**
    * Loops a post.
    * @example
@@ -82,6 +83,7 @@ class Post {
         .then(res => resolve(res))
     })
   }
+
   /**
    * Rebytes a post.
    * @example
