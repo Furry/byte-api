@@ -120,36 +120,6 @@ class Post {
         .then(res => resolve(res))
     })
   }
-
-  /* Holy shit this is a huge mess. I'll finish it when i'm home. */
-  __post(url, category) {
-    return new Promise((resolve, reject) => {
-      this.client
-        .baseRequest(`upload`, 'POST', 'json', {
-          payload: { contentType: 'video/mp4' }
-        })
-        .catch(err => reject(err))
-        .then(res => {
-          this.client
-            .baseRequest(res.data.uploadURL, 'PUT', 'json', {
-              category: category,
-              videoUploadID: res.data.uploadID,
-              thumbUploadID: res.data.uploadID
-            })
-            .then(err => reject(err))
-            .then(res2 => {
-              this.client
-                .baseRequest('post', 'POST', 'post', {
-                  'Content-Type': 'video/mp4'
-                })
-                .catch(err => reject(err))
-                .then(res => {
-                  console.log(res)
-                })
-            })
-        })
-    })
-  }
 }
 
 module.exports = Post

@@ -2,6 +2,7 @@ const HttpsProxyAgent = require("https-proxy-agent")
 const EventEmitter = require("events")
 const fetch = require("node-fetch")
 const Errors = require("./Error")
+const resolveSource = require("../utils/resolveSource")
 
 /**
  * @typedef HttpHandlerConfigOptions
@@ -179,8 +180,22 @@ class HttpHandler extends EventEmitter {
         return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
-    createPost(path) {
-        
+    createPost(uri) {
+        return new Promise(async (resolve, reject) => {
+
+            let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "video/mp4" })
+            .catch((err) => reject(err))
+
+            let buffer = await resolveSource.resolveBufferFromURL(uri)
+            .catch((err) => reject(err))
+
+            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "json", { "Content-Type": "video/mp4", body: buffer})
+            .catch((err) => reject(err))
+
+            console.log(secondReq)
+
+
+        })
     }
 }
 

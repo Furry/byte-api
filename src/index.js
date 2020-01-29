@@ -1,5 +1,5 @@
 module.exports = {
-    Client: require("./constructors/client")
+    Client: require("./constructors/Client")
 }
 
 module.exports.Isolated = {
