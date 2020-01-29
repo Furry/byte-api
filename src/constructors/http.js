@@ -86,17 +86,22 @@ class HttpHandler extends EventEmitter {
         }
 
         if (resulttype == "post") {
-            response.data.posts.forEach(post => {
-                post.client = this
-                result.push(new PostCon(post))
-            })
-            return result
+            if (response.data.posts && response.data.posts[0]) {
+                response.data.posts.forEach(post => {
+                    post.client = this
+                    result.push(new PostCon(post))
+                })
+                return result
+            } else {
+                response.data.client = this
+                return new PostCon(response.data)
+            }
 
 
         } 
 
         if (resulttype == "user") {
-            if (response.data.accounts || response.data.accounts[0]) {
+            if (response.data.accounts && response.data.accounts[0]) {
                 response.data.accounts.forEach(user => {
                     user.client = this
                     result.push(new UserCon(user))
@@ -203,7 +208,21 @@ class HttpHandler extends EventEmitter {
         return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
-    createPost(uri, category="Chill", caption="hi") {
+    /**
+     * To post a new video to the Client.
+     * @param {videoUrlResolvable} uri The resolvable URL of the video
+     * @param {string} [category="chill"] The category to post to
+     * @param {string} [caption=""] The caption
+     * @returns {post} The post you just created.
+     * @example
+     * .post("https://www.mp4url.com/mp4")
+     * .then((res) => console.log(res.videoSrc))
+     * 
+     * @example
+     * .post("./file.mp4")
+     * .then((res) => console.log(res.videoSrc))
+     */
+    createPost(uri, category="chill", caption="") {
         return new Promise(async (resolve, reject) => {
 
             let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "video/mp4" })
@@ -219,8 +238,7 @@ class HttpHandler extends EventEmitter {
             //.catch((err) => reject(err))
             //.then((res) => resolve(res))
 
-            console.log(`${category} | ${firstReq.data.uploadID} | ${caption}`)
-            let thirdReq = await this.baseRequest('post', 'POST', 'json', {
+            let thirdReq = await this.baseRequest('post', 'POST', 'post', {
                 category: category,
                 videoUploadID: firstReq.data.uploadID,
                 thumbUploadID: firstReq.data.uploadID,
