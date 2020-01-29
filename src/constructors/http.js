@@ -23,29 +23,41 @@ class HttpHandler extends EventEmitter {
         this.config = config
     }
 
-    baseRequest(url, method, resulttype, body) {
+    baseRequest(url, method, resulttype, body, settings={}) {
         return new Promise((resolve, reject) => {
 
-            let options = []
-            options["method"] = method
-            options["headers"] = { "Content-Type": "application/json", "authorization": this.authorization }
-            if (body) options["body"] = JSON.stringify(body)
+            let finalurl;
+            let options = {}
+
+            if (settings.override) {
+                options = body
+                finalurl = url
+                options["method"] = method
+            } else {
+                options["method"] = method
+                options["headers"] = { "Content-Type": "application/json", "authorization": this.authorization }
+                if (body) options["body"] = JSON.stringify(body)
+                finalurl = this.baseurl+url
+            }
+
             if (this.config.proxy) options["agent"] = new HttpsProxyAgent(`http://${this.config.proxy}`) 
 
-            fetch(this.baseurl+url, options)
+            fetch(finalurl, options)
             .then(async (res) => {
                 switch(res.status) {
-                    case 404: reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
+                    case 404: console.log(options); reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
                     case 429: reject(new Errors.APIError("Too Many Requests. You're being rate limited")); break
 
                     case 200:
-                        res.json()
-                        .then((json) => resolve(this.responseHandler(json, resulttype)))
+                    
+                        //res.json()
+                        //.then((json) => resolve(this.responseHandler(json, resulttype)))
+                        resolve(this.responseHandler(res, resulttype))
+
                     break
 
                     default: 
-                        console.log(res.status)
-                        reject(new Errors.APIError("Something went wrong..")) // Fallback for now.
+                        reject(new Errors.APIError(`Something went wrong.. Code: ${res.status}`)) // Fallback for now.
                     break
                 }
             })
@@ -53,14 +65,25 @@ class HttpHandler extends EventEmitter {
         })
     }
 
-    responseHandler(response, resulttype) {
+    async responseHandler(_response, resulttype) {
         
         let PostCon = require("./Post")
         let UserCon = require("./User")
         let CommentCon = require("./Comment")
 
+        if (resulttype == "raw") {
+            return _response
+        }
+
+        let response = await _response.json()
+
         if (!response.data || !Object.keys(response.data)[0]) return response
         let result = []
+
+        if (resulttype == "json") {
+            console.log("RAW")
+            return response
+        }
 
         if (resulttype == "post") {
             response.data.posts.forEach(post => {
@@ -180,7 +203,7 @@ class HttpHandler extends EventEmitter {
         return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
-    createPost(uri) {
+    createPost(uri, category="Chill", caption="hi") {
         return new Promise(async (resolve, reject) => {
 
             let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "video/mp4" })
@@ -189,10 +212,23 @@ class HttpHandler extends EventEmitter {
             let buffer = await resolveSource.resolveBufferFromURL(uri)
             .catch((err) => reject(err))
 
-            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "json", { "Content-Type": "video/mp4", body: buffer})
+            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "raw", { headers:{"Content-Type": "video/mp4"}, body: buffer}, { override: true })
             .catch((err) => reject(err))
 
-            console.log(secondReq)
+            //let thirdReq = await this.baseRequest("post", "POST", "post", { category: category, videoUploadID: firstReq.data.uploadID, thumbUploadID: firstReq.data.uploadID, caption: caption})
+            //.catch((err) => reject(err))
+            //.then((res) => resolve(res))
+
+            console.log(`${category} | ${firstReq.data.uploadID} | ${caption}`)
+            let thirdReq = await this.baseRequest('post', 'POST', 'json', {
+                category: category,
+                videoUploadID: firstReq.data.uploadID,
+                thumbUploadID: firstReq.data.uploadID,
+                caption: caption
+            })
+            .catch((err) => reject(err))
+            .then((res) => resolve(res))
+            //console.log(await secondReq.body)
 
 
         })
