@@ -215,16 +215,16 @@ class HttpHandler extends EventEmitter {
      * @param {string} [caption=""] The caption
      * @returns {post} The post you just created.
      * @example
-     * .post("https://www.mp4url.com/mp4")
+     * .createPost("https://www.mp4url.com/mp4")
      * .then((res) => console.log(res.videoSrc))
      * 
      * @example
-     * .post("./file.mp4")
+     * .createPost("./file.mp4")
      * .then((res) => console.log(res.videoSrc))
      */
-    createPost(uri, category="chill", caption="") {
+    createPost(uri, caption="", category) {
         return new Promise(async (resolve, reject) => {
-
+            if (caption) caption = caption.toLowerCase()
             let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "video/mp4" })
             .catch((err) => reject(err))
 
@@ -238,7 +238,7 @@ class HttpHandler extends EventEmitter {
             //.catch((err) => reject(err))
             //.then((res) => resolve(res))
 
-            let thirdReq = await this.baseRequest('post', 'POST', 'post', {
+            this.baseRequest('post', 'POST', 'post', {
                 category: category,
                 videoUploadID: firstReq.data.uploadID,
                 thumbUploadID: firstReq.data.uploadID,
@@ -246,11 +246,44 @@ class HttpHandler extends EventEmitter {
             })
             .catch((err) => reject(err))
             .then((res) => resolve(res))
-            //console.log(await secondReq.body)
+            //console.log(await secondReq.body
+        })
 
+    }
 
+    /**
+     * To change the Client's account avatar.
+     * @param {imageUrlResolvable} uri The resolvable URL of the image
+     * @returns {promise<object>}
+     * 
+     * @example
+     * .setAvatar("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
+     * .then((res) => console.log(res))
+     * 
+     * @example
+     * .setAvatar("./image.jpeg")
+     * .then((res) => console.log(res))
+     */
+    setAvatar(uri) {
+        return new Promise(async (resolve, reject) => {
+  
+            let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "image/jpeg" })
+            .catch((err) => reject(err))
+  
+            let buffer = await resolveSource.resolveBufferFromURL(uri)
+            .catch((err) => reject(err))
+  
+            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "raw", { headers:{"Content-Type": "image/jpeg"}, body: buffer}, { override: true })
+            .catch((err) => reject(err))
+  
+            this.baseRequest('account/me', 'PUT', 'json', { avatarUploadID: firstReq.data.uploadID })
+            .catch((err) => reject(err))
+            .then((res) => resolve(res))
+  
+  
         })
     }
+
 }
 
 
