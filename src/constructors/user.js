@@ -68,7 +68,7 @@ class User {
   }
 
   /**
-   * Gets post of a user
+   * Gets all posts from a user
    * @returns {object}
    *
    * @example
