@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#createPost">createPost</a></li><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
 </nav>
 
 <div id="main">
@@ -71,7 +71,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_Http.js.html">constructors/Http.js</a>, <a href="constructors_Http.js.html#line18">line 18</a>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -271,6 +271,265 @@
 
     
 
+    <h4 class="name" id="createPost"><span class="type-signature"></span>createPost<span class="signature">(uri, category<span class="signature-attributes">opt</span>, caption<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {post}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line225">line 225</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    To post a new video to the Client.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>.post("https://www.mp4url.com/mp4").then((res) => console.log(res.videoSrc))</code></pre>
+
+    <pre class="prettyprint"><code>.post("./file.mp4").then((res) => console.log(res.videoSrc))</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>uri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">videoUrlResolvable</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The resolvable URL of the video</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>"chill"</code>
+                
+                </td>
+            
+
+            <td class="description last">The category to post to</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>caption</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>""</code>
+                
+                </td>
+            
+
+            <td class="description last">The caption</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The post you just created.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">post</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="getGlobalFeed"><span class="type-signature"></span>getGlobalFeed<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
 
     
@@ -283,7 +542,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_Http.js.html">constructors/Http.js</a>, <a href="constructors_Http.js.html#line162">line 162</a>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line192">line 192</a>
     </li></ul></dd>
     
 
@@ -393,7 +652,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_Http.js.html">constructors/Http.js</a>, <a href="constructors_Http.js.html#line177">line 177</a>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line207">line 207</a>
     </li></ul></dd>
     
 
@@ -552,7 +811,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_Http.js.html">constructors/Http.js</a>, <a href="constructors_Http.js.html#line136">line 136</a>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -715,7 +974,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_Http.js.html">constructors/Http.js</a>, <a href="constructors_Http.js.html#line123">line 123</a>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line153">line 153</a>
     </li></ul></dd>
     
 
@@ -878,7 +1137,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_Http.js.html">constructors/Http.js</a>, <a href="constructors_Http.js.html#line149">line 149</a>
+        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line179">line 179</a>
     </li></ul></dd>
     
 
@@ -1044,7 +1303,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Jan 27 2020 22:36:41 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 29 2020 14:12:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>constructors/Post.js - Documentation</title>
+    <title>constructors/post.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -27,12 +27,12 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#createPost">createPost</a></li><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">constructors/Post.js</h1>
+    <h1 class="page-title">constructors/post.js</h1>
     
 
     
@@ -42,7 +42,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const UserCon = require("./User")
+            <pre class="prettyprint source linenums"><code>const UserCon = require('./User')
 
 /**
  * @typedef {object} Post
@@ -56,7 +56,7 @@
  * @property {array&lt;object>} mentions The users the post mentions.
  * @property {number} date The Timestamp Creation Date of the post.
  * @property {string} videoSrc The Direct URL To The Video File.
- * @property {string} thumbSrc The URL To The Thumbnail.  
+ * @property {string} thumbSrc The URL To The Thumbnail.
  * @property {number} commentCount The Amount Of Comments On The Post.
  * @property {number} likeCount The Amount Of Likes On The Post.
  * @property {boolean} likedByMe If the post is liked by the Client or not.
@@ -66,82 +66,108 @@
  * @property {User} author The author of the post.
  */
 
- /**
-  * The Post Class.
-  * @class
-  * @property {...Post}
-  */
+/**
+ * The Post Class.
+ * @class
+ * @property {...Post}
+ */
 class Post {
-    /**
-     * The Post Constructor
-     * @param {object} post The raw post data. 
-     * @param {object} user The author of the post.
-     */
-    constructor(post, user) {
-        Object.assign(this, post)
+  /**
+   * The Post Constructor
+   * @param {object} post The raw post data.
+   * @param {User} user The author of the post.
+   */
+  constructor(post, user) {
+    Object.assign(this, post)
 
-        this.author = new UserCon(user) 
-    }
+    this.author = new UserCon(user)
+  }
 
-    /**
-     * Likes a post.
-     * @example
-     * &lt;post>.like()
-     * .then((res) => console.log(res))
-     */
-    like() {
-        return new Promise((resolve, reject) => {
-            this.client.baseRequest(`post/id/${this.id}/feedback/like`, "PUT", "postaction")
-            .catch((err) => reject(err))
-            .then((res) => resolve(res))
+  /**
+   * Likes a post.
+   * @example
+   * &lt;post>.like()
+   * .then((res) => console.log(res))
+   */
+  like() {
+    return new Promise((resolve, reject) => {
+      this.client
+        .baseRequest(`post/id/${this.id}/feedback/like`, 'PUT', 'postaction')
+        .catch(err => reject(err))
+        .then(res => resolve(res))
+    })
+  }
+
+  /**
+   * Removes a like from a post.
+   * @example
+   * &lt;post>.dislike()
+   * .then((res) => console.log(res))
+   */
+  unlike() {
+    return new Promise((resolve, reject) => {
+      this.client
+        .baseRequest(`post/id/${this.id}/feedback/like`, 'DELETE', 'postaction')
+        .catch(err => reject(err))
+        .then(res => resolve(res))
+    })
+  }
+
+  /**
+   * Loops a post.
+   * @example
+   * &lt;post>.loop()
+   * .then((res) => console.log(res))
+   */
+  loop() {
+    return new Promise((resolve, reject) => {
+      this.client
+        .baseRequest(`post/id/${this.id}/loop`, 'POST', 'postaction')
+        .catch(err => reject(err))
+        .then(res => resolve(res))
+    })
+  }
+
+  /**
+   * Rebytes a post.
+   * @example
+   * &lt;post>.rebyte()
+   * .then((res) => console.log(res))
+   */
+  rebyte() {
+    return new Promise((resolve, reject) => {
+      this.client
+        .baseRequest(`rebyte`, 'POST', 'postaction', {
+          postID: this.id
         })
-    }
+        .catch(err => reject(err))
+        .then(res => resolve(res))
+    })
+  }
 
-    /**
-     * Removes a like from a post.
-     * @example
-     * &lt;post>.dislike()
-     * .then((res) => console.log(res))
-     */
-    unlike() {
-        return new Promise((resolve, reject) => {
-            this.client.baseRequest(`post/id/${this.id}/feedback/like`, "DELETE", "postaction")
-            .catch((err) => reject(err))
-            .then((res) => resolve(res))
+  /**
+   * Appends a comment to a post.
+   * @param {string} comment The text for your comment.
+   * @example
+   * &lt;post>.comment("Wow, nice vid &lt;3").then((res) => console.log(res))
+   */
+  comment(comment) {
+    return new Promise((resolve, reject) => {
+      // stubId is the timestamp in MS that the comment was added.
+      this.client
+        .baseRequest(`post/id/${this.id}/feedback/comment`, 'POST', 'comment', {
+          body: comment,
+          postID: this.id,
+          stubId: Date.now()
         })
-    }
-    /**
-     * Rebytes a post.
-     * @example
-     * &lt;post>.rebyte()
-     * .then((res) => console.log(res))
-     */
-    rebyte() {
-        return new Promise((resolve, reject) => {
-            this.client.baseRequest(`post/id/${this.id}/loop`, "POST", "postaction")
-            .catch((err) => reject(err))
-            .then((res) => resolve(res))
-        })
-    }
-
-    /**
-     * Appends a comment to a post.
-     * @param {string} comment The text for your comment.
-     * @example
-     * &lt;post>.comment("Wow, nice vid &lt;3").then((res) => console.log(res))
-     */
-    comment(comment) {
-        return new Promise((resolve, reject) => {
-            // stubId is the timestamp in MS that the comment was added.
-            this.client.baseRequest(`post/id/${this.id}/feedback/comment`, "POST", "comment", {"body": comment, "postID": this.id, stubId: Date.now()})
-            .catch((err) => reject(err))
-            .then((res) => resolve(res))
-        })
-    }
-
+        .catch(err => reject(err))
+        .then(res => resolve(res))
+    })
+  }
 }
 
-module.exports = Post</code></pre>
+module.exports = Post
+</code></pre>
         </article>
     </section>
 
@@ -155,7 +181,7 @@ module.exports = Post</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Jan 27 2020 22:36:41 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 29 2020 14:12:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

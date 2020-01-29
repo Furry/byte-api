@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>constructors/Http.js - Documentation</title>
+    <title>constructors/http.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -27,12 +27,12 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#createPost">createPost</a></li><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">constructors/Http.js</h1>
+    <h1 class="page-title">constructors/http.js</h1>
     
 
     
@@ -46,6 +46,7 @@
 const EventEmitter = require("events")
 const fetch = require("node-fetch")
 const Errors = require("./Error")
+const resolveSource = require("../utils/resolveSource")
 
 /**
  * @typedef HttpHandlerConfigOptions
@@ -66,29 +67,41 @@ class HttpHandler extends EventEmitter {
         this.config = config
     }
 
-    baseRequest(url, method, resulttype, body) {
+    baseRequest(url, method, resulttype, body, settings={}) {
         return new Promise((resolve, reject) => {
 
-            let options = []
-            options["method"] = method
-            options["headers"] = { "Content-Type": "application/json", "authorization": this.authorization }
-            if (body) options["body"] = JSON.stringify(body)
+            let finalurl;
+            let options = {}
+
+            if (settings.override) {
+                options = body
+                finalurl = url
+                options["method"] = method
+            } else {
+                options["method"] = method
+                options["headers"] = { "Content-Type": "application/json", "authorization": this.authorization }
+                if (body) options["body"] = JSON.stringify(body)
+                finalurl = this.baseurl+url
+            }
+
             if (this.config.proxy) options["agent"] = new HttpsProxyAgent(`http://${this.config.proxy}`) 
 
-            fetch(this.baseurl+url, options)
+            fetch(finalurl, options)
             .then(async (res) => {
                 switch(res.status) {
-                    case 404: reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
+                    case 404: console.log(options); reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
                     case 429: reject(new Errors.APIError("Too Many Requests. You're being rate limited")); break
 
                     case 200:
-                        res.json()
-                        .then((json) => resolve(this.responseHandler(json, resulttype)))
+                    
+                        //res.json()
+                        //.then((json) => resolve(this.responseHandler(json, resulttype)))
+                        resolve(this.responseHandler(res, resulttype))
+
                     break
 
                     default: 
-                        console.log(res.status)
-                        reject(new Errors.APIError("Something went wrong..")) // Fallback for now.
+                        reject(new Errors.APIError(`Something went wrong.. Code: ${res.status}`)) // Fallback for now.
                     break
                 }
             })
@@ -96,27 +109,43 @@ class HttpHandler extends EventEmitter {
         })
     }
 
-    responseHandler(response, resulttype) {
+    async responseHandler(_response, resulttype) {
         
         let PostCon = require("./Post")
         let UserCon = require("./User")
         let CommentCon = require("./Comment")
 
+        if (resulttype == "raw") {
+            return _response
+        }
+
+        let response = await _response.json()
+
         if (!response.data || !Object.keys(response.data)[0]) return response
         let result = []
 
+        if (resulttype == "json") {
+            console.log("RAW")
+            return response
+        }
+
         if (resulttype == "post") {
-            response.data.posts.forEach(post => {
-                post.client = this
-                result.push(new PostCon(post))
-            })
-            return result
+            if (response.data.posts &amp;&amp; response.data.posts[0]) {
+                response.data.posts.forEach(post => {
+                    post.client = this
+                    result.push(new PostCon(post))
+                })
+                return result
+            } else {
+                response.data.client = this
+                return new PostCon(response.data)
+            }
 
 
         } 
 
         if (resulttype == "user") {
-            if (response.data.accounts || response.data.accounts[0]) {
+            if (response.data.accounts &amp;&amp; response.data.accounts[0]) {
                 response.data.accounts.forEach(user => {
                     user.client = this
                     result.push(new UserCon(user))
@@ -132,6 +161,7 @@ class HttpHandler extends EventEmitter {
             if (response.data.posts[0] &amp;&amp; response.data.accounts) {
                 response.data.posts.forEach((post) => {
                     post.client = this
+                    response.data.accounts[post.authorID].client = this
                     result.push(new PostCon(post, response.data.accounts[post.authorID]))
                 })
                 return result
@@ -222,6 +252,49 @@ class HttpHandler extends EventEmitter {
         return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
+    /**
+     * To post a new video to the Client.
+     * @param {videoUrlResolvable} uri The resolvable URL of the video
+     * @param {string} [category="chill"] The category to post to
+     * @param {string} [caption=""] The caption
+     * @returns {post} The post you just created.
+     * @example
+     * .post("https://www.mp4url.com/mp4")
+     * .then((res) => console.log(res.videoSrc))
+     * 
+     * @example
+     * .post("./file.mp4")
+     * .then((res) => console.log(res.videoSrc))
+     */
+    createPost(uri, category="chill", caption="") {
+        return new Promise(async (resolve, reject) => {
+
+            let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "video/mp4" })
+            .catch((err) => reject(err))
+
+            let buffer = await resolveSource.resolveBufferFromURL(uri)
+            .catch((err) => reject(err))
+
+            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "raw", { headers:{"Content-Type": "video/mp4"}, body: buffer}, { override: true })
+            .catch((err) => reject(err))
+
+            //let thirdReq = await this.baseRequest("post", "POST", "post", { category: category, videoUploadID: firstReq.data.uploadID, thumbUploadID: firstReq.data.uploadID, caption: caption})
+            //.catch((err) => reject(err))
+            //.then((res) => resolve(res))
+
+            let thirdReq = await this.baseRequest('post', 'POST', 'post', {
+                category: category,
+                videoUploadID: firstReq.data.uploadID,
+                thumbUploadID: firstReq.data.uploadID,
+                caption: caption
+            })
+            .catch((err) => reject(err))
+            .then((res) => resolve(res))
+            //console.log(await secondReq.body)
+
+
+        })
+    }
 }
 
 
@@ -239,7 +312,7 @@ module.exports = HttpHandler</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Jan 27 2020 22:36:41 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 29 2020 14:12:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
