@@ -85,7 +85,7 @@ class HttpHandler extends EventEmitter {
             return response
         }
 
-        if (resulttype == "post") {
+        else if (resulttype == "post") {
             if (response.data.posts && response.data.posts[0]) {
                 response.data.posts.forEach(post => {
                     post.client = this
@@ -100,7 +100,7 @@ class HttpHandler extends EventEmitter {
 
         } 
 
-        if (resulttype == "user") {
+        else if (resulttype == "user") {
             if (response.data.accounts && response.data.accounts[0]) {
                 response.data.accounts.forEach(user => {
                     user.client = this
@@ -113,7 +113,7 @@ class HttpHandler extends EventEmitter {
             }
         }
 
-        if (resulttype == "postuser") {
+        else if (resulttype == "postuser") {
             if (response.data.posts[0] && response.data.accounts) {
                 response.data.posts.forEach((post) => {
                     post.client = this
@@ -124,7 +124,7 @@ class HttpHandler extends EventEmitter {
             }
         }
 
-        if (resulttype == "comment") {
+        else if (resulttype == "comment") {
             if (response.data[0]) {
                 response.data.accounts.forEach(comment => {
                     comment.client = this
@@ -135,6 +135,15 @@ class HttpHandler extends EventEmitter {
                 response.client = this
                 return new CommentCon(response.data)
             }
+        }
+
+        else if (resulttype == "categoryposts") {
+            response.data.posts.forEach((post) => {
+                post.client = this
+                response.data.accounts[post.authorID].client = this
+                result.push(new PostCon(post, response.data.accounts[post.authorID]))
+            })
+            return result;
         }
 
         else return response
@@ -191,6 +200,21 @@ class HttpHandler extends EventEmitter {
      */
     getGlobalFeed() {
         return this.baseRequest("feed/global", "GET", "postuser")
+    }
+
+    /**
+     * 
+     * @param {string} category The name of the category
+     * @param {string} sort Either "popular" or "recent" as of now
+     * 
+     * @returns {array<posts>}
+     * 
+     * @example
+     * getCategoryPosts("wierd", "recent")
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getCategoryPosts(category, sort="popular") {
+        return this.baseRequest("categories/"+category+"/"+sort, "GET", "categoryposts")
     }
 
     /**
