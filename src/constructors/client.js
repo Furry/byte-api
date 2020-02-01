@@ -105,7 +105,7 @@ module.exports = class Client extends HttpHandler {
     }
 
     /**
-     * Latest Posts. (Alias for getMix)
+     * Latest Posts.
      * @returns {array<posts>}
      * 
      * @example
@@ -113,7 +113,7 @@ module.exports = class Client extends HttpHandler {
      * .then((res) => res.forEach((post) => post.like()))
      */
     getLatest() {
-        return this.getMix()
+        return this.baseRequest(`feed/latest`, "GET", "postuser")
     }
     
     /**
