@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#createPost">createPost</a></li><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getByCategory">getByCategory</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#getLatest">getLatest</a></li><li data-type='method'><a href="module.exports.html#getMix">getMix</a></li><li data-type='method'><a href="module.exports.html#getPopularv2">getPopularv2</a></li><li data-type='method'><a href="module.exports.html#getPopularv3">getPopularv3</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setAvatar">setAvatar</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
 </nav>
 
 <div id="main">
@@ -266,7 +266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line225">line 225</a>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -276,11 +276,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="HttpHandler.html#createPost">HttpHandler#createPost</a>
-    </li></ul></dd>
     
 
     
@@ -324,9 +319,9 @@
 
     <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>.post("https://www.mp4url.com/mp4").then((res) => console.log(res.videoSrc))</code></pre>
+    <pre class="prettyprint"><code>.createPost("https://www.mp4url.com/mp4").then((res) => console.log(res.videoSrc))</code></pre>
 
-    <pre class="prettyprint"><code>.post("./file.mp4").then((res) => console.log(res.videoSrc))</code></pre>
+    <pre class="prettyprint"><code>.createPost("./file.mp4").then((res) => console.log(res.videoSrc))</code></pre>
 
 
 
@@ -366,7 +361,7 @@
             <td class="type">
             
                 
-<span class="param-type">videoUrlResolvable</span>
+<span class="param-type"><a href="global.html#videoUrlResolvable">videoUrlResolvable</a></span>
 
 
             
@@ -518,7 +513,7 @@
 
     
 
-    <h4 class="name" id="getGlobalFeed"><span class="type-signature"></span>getGlobalFeed<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
+    <h4 class="name" id="getByCategory"><span class="type-signature"></span>getByCategory<span class="signature">(category, sort<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
 
     
 
@@ -530,7 +525,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line192">line 192</a>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -540,11 +535,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="HttpHandler.html#getGlobalFeed">HttpHandler#getGlobalFeed</a>
-    </li></ul></dd>
     
 
     
@@ -575,7 +565,221 @@
 
 
 <div class="description usertext">
-    Returns all posts in your global feed.
+    Popular posts from a category.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>getByCategory().then((res) => res.forEach((post) => post.like()))</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The category to fetch.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sort</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#sorting">sorting</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>recent</code>
+                
+                </td>
+            
+
+            <td class="description last">Which way to sort.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array.&lt;posts></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getGlobalFeed"><span class="type-signature"></span>getGlobalFeed<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Returns all posts in your global feed. Aka all-time HOT posts.
 </div>
 
 
@@ -633,6 +837,446 @@
 
     
 
+    <h4 class="name" id="getLatest"><span class="type-signature"></span>getLatest<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line116">line 116</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Latest Posts.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>getMix().then((res) => res.forEach((post) => post.like()))</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array.&lt;posts></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getMix"><span class="type-signature"></span>getMix<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line104">line 104</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Latest Posts.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>getMix().then((res) => res.forEach((post) => post.like()))</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array.&lt;posts></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getPopularv2"><span class="type-signature"></span>getPopularv2<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line80">line 80</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Popular V2. Aka Trending Now
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>getPopularv2().then((res) => res.forEach((post) => post.like()))</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array.&lt;posts></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getPopularv3"><span class="type-signature"></span>getPopularv3<span class="signature">()</span><span class="type-signature"> &rarr; {array.&lt;posts>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Popular V3, Recomended for you.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>getPopularv3().then((res) => res.forEach((post) => post.like()))</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array.&lt;posts></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="searchByName"><span class="type-signature"></span>searchByName<span class="signature">(name)</span><span class="type-signature"> &rarr; {promise.&lt;array>}</span></h4>
 
     
@@ -645,7 +1289,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line207">line 207</a>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -655,11 +1299,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="HttpHandler.html#searchByName">HttpHandler#searchByName</a>
-    </li></ul></dd>
     
 
     
@@ -797,6 +1436,167 @@
 
     
 
+    <h4 class="name" id="setAvatar"><span class="type-signature"></span>setAvatar<span class="signature">(uri)</span><span class="type-signature"> &rarr; {promise.&lt;object>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line221">line 221</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    To change the Client's account avatar.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>.setAvatar("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png").then((res) => console.log(res))</code></pre>
+
+    <pre class="prettyprint"><code>.setAvatar("./image.jpeg").then((res) => console.log(res))</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>uri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#imageUrlResolvable">imageUrlResolvable</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The resolvable URL of the image</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">promise.&lt;object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="setBio"><span class="type-signature"></span>setBio<span class="signature">(message)</span><span class="type-signature"> &rarr; {promise.&lt;object>}</span></h4>
 
     
@@ -809,7 +1609,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line166">line 166</a>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -819,11 +1619,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="HttpHandler.html#setBio">HttpHandler#setBio</a>
-    </li></ul></dd>
     
 
     
@@ -977,7 +1772,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line153">line 153</a>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -987,11 +1782,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="HttpHandler.html#setProfileColor">HttpHandler#setProfileColor</a>
-    </li></ul></dd>
     
 
     
@@ -1145,7 +1935,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constructors_http.js.html">constructors/http.js</a>, <a href="constructors_http.js.html#line179">line 179</a>
+        <a href="constructors_Client.js.html">constructors/Client.js</a>, <a href="constructors_Client.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -1155,11 +1945,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="HttpHandler.html#subscribe">HttpHandler#subscribe</a>
-    </li></ul></dd>
     
 
     
@@ -1316,7 +2101,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 29 2020 14:12:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Feb 01 2020 01:14:53 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

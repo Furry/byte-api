@@ -16,7 +16,7 @@ module.exports = class Client extends HttpHandler {
         
     }
 
-        /**
+    /**
      * Sets your profile color
      * @param {number} scheme The color you want your profile as. 1 to 17
      * @returns {Promise<object>} the HTTP response.
@@ -44,6 +44,7 @@ module.exports = class Client extends HttpHandler {
 
     /**
      * Subscribes to a user
+     * @depreciated
      * @param {string} id User's ID to subscribe to.
      * @returns {promise<object>} the HTTP response.
      * 
@@ -117,18 +118,21 @@ module.exports = class Client extends HttpHandler {
     }
     
     /**
-     * !! NOT STABLE !!
-     * @private
+     * The way for the results to come back.
+     * @typedef {"popular"|"recent"} sorting
+     */
+    /**
      * Popular posts from a category.
      * @returns {array<posts>}
      * @param {string} category The category to fetch.
+     * @param {sorting} [sort=recent] Which way to sort.
      * 
      * @example
      * getByCategory()
      * .then((res) => res.forEach((post) => post.like()))
      */
-    __getByCategory(category) {
-        return this.baseRequest(`feed/categories/${category}/popular`)
+    getByCategory(category, sort="recent") {
+        return this.baseRequest(`categories/${category}/${sort}`, "GET", "postuser")
     }
 
     /**
@@ -146,6 +150,12 @@ module.exports = class Client extends HttpHandler {
         return this.baseRequest(`account/prefix/${name}`, "GET", "user")
     }
 
+    /**
+     * A local path, or URI path to a Video file.
+     * @typedef {string} videoUrlResolvable 
+     * @example ./myvid.mp4
+     * @example https://www.givememyvideo.com/myvid.mp4
+     */
     /**
      * To post a new video to the Client.
      * @param {videoUrlResolvable} uri The resolvable URL of the video
@@ -189,6 +199,12 @@ module.exports = class Client extends HttpHandler {
 
     }
 
+    /**
+     * A local path, or URI path to an image.
+     * @typedef {string} imageUrlResolvable 
+     * @example ./myimg.jpg
+     * @example https://www.givememyimage.com/image.jpg
+     */
     /**
      * To change the Client's account avatar.
      * @param {imageUrlResolvable} uri The resolvable URL of the image

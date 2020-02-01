@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a><ul class='methods'><li data-type='method'><a href="HttpHandler.html#createPost">createPost</a></li><li data-type='method'><a href="HttpHandler.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="HttpHandler.html#searchByName">searchByName</a></li><li data-type='method'><a href="HttpHandler.html#setBio">setBio</a></li><li data-type='method'><a href="HttpHandler.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="HttpHandler.html#subscribe">subscribe</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Comment">Comment</a><ul class='methods'><li data-type='method'><a href="global.html#Comment#delete">delete</a></li></ul></li><li><a href="HttpHandler.html">HttpHandler</a></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#createPost">createPost</a></li><li data-type='method'><a href="module.exports.html#getByCategory">getByCategory</a></li><li data-type='method'><a href="module.exports.html#getGlobalFeed">getGlobalFeed</a></li><li data-type='method'><a href="module.exports.html#getLatest">getLatest</a></li><li data-type='method'><a href="module.exports.html#getMix">getMix</a></li><li data-type='method'><a href="module.exports.html#getPopularv2">getPopularv2</a></li><li data-type='method'><a href="module.exports.html#getPopularv3">getPopularv3</a></li><li data-type='method'><a href="module.exports.html#searchByName">searchByName</a></li><li data-type='method'><a href="module.exports.html#setAvatar">setAvatar</a></li><li data-type='method'><a href="module.exports.html#setBio">setBio</a></li><li data-type='method'><a href="module.exports.html#setProfileColor">setProfileColor</a></li><li data-type='method'><a href="module.exports.html#subscribe">subscribe</a></li></ul></li><li><a href="global.html#Post">Post</a><ul class='methods'><li data-type='method'><a href="global.html#Post#comment">comment</a></li><li data-type='method'><a href="global.html#Post#like">like</a></li><li data-type='method'><a href="global.html#Post#loop">loop</a></li><li data-type='method'><a href="global.html#Post#rebyte">rebyte</a></li><li data-type='method'><a href="global.html#Post#unlike">unlike</a></li></ul></li><li><a href="global.html#User">User</a><ul class='methods'><li data-type='method'><a href="global.html#User#getPosts">getPosts</a></li><li data-type='method'><a href="global.html#User#populate">populate</a></li><li data-type='method'><a href="global.html#User#subscribe">subscribe</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkName">checkName</a></li></ul>
 </nav>
 
 <div id="main">
@@ -60,7 +60,227 @@ module.exports = class Client extends HttpHandler {
         
     }
 
+    /**
+     * Sets your profile color
+     * @param {number} scheme The color you want your profile as. 1 to 17
+     * @returns {Promise&lt;object>} the HTTP response.
+     * 
+     * @example
+     * setProfileColor(scheme)
+     * .then((res) => console.log(res))
+     */
+    setProfileColor(scheme) {
+        return this.baseRequest("account/me", "PUT", "profile", {"colorScheme": scheme})
+    }
+
+    /**
+     * Sets your Bio
+     * @param {string} message What you want your new BIO as.
+     * @returns {promise&lt;object>} the HTTP response.
+     * 
+     * @example
+     * setBio("the one and only hackerman ;)")
+     * .then((res) => console.log(res))
+     */
+    setBio(message) {
+        return this.baseRequest("account/me", "PUT", "profile", {"bio": message})
+    }
+
+    /**
+     * Subscribes to a user
+     * @depreciated
+     * @param {string} id User's ID to subscribe to.
+     * @returns {promise&lt;object>} the HTTP response.
+     * 
+     * @example
+     * subscribe()
+     * .then((res) => console.log(res))
+     */
+    subscribe(id) {
+        console.log("&lt;client>.subscribe() is DEPRECIATED. Please use &lt;user>.subscribe, or &lt;post>.author.subscribe()")
+        return this.baseRequest(`account/id/${id}/follow`, "PUT", "user")
+    }
+
+    /**
+     * Returns all posts in your global feed. Aka all-time HOT posts.
+     * @returns {array&lt;posts>}
+     * 
+     * @example
+     * getGlobalFeed()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getGlobalFeed() {
+        return this.baseRequest("feed/global", "GET", "postuser")
+    }
     
+    /**
+     * Popular V2. Aka Trending Now
+     * @returns {array&lt;posts>}
+     * 
+     * @example
+     * getPopularv2()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getPopularv2() {
+        return this.baseRequest("feed/popular/v2", "GET", "postuser")
+    }
+
+    /**
+     * Popular V3, Recomended for you.
+     * @returns {array&lt;posts>}
+     * 
+     * @example
+     * getPopularv3()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getPopularv3() {
+        return this.baseRequest("feed/popular/v3", "GET", "postuser")
+    }
+
+    /**
+     * Latest Posts.
+     * @returns {array&lt;posts>}
+     * 
+     * @example
+     * getMix()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getMix() {
+        return this.baseRequest("feed/mix", "GET", "postuser")
+    }
+
+    /**
+     * Latest Posts.
+     * @returns {array&lt;posts>}
+     * 
+     * @example
+     * getMix()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getLatest() {
+        return this.baseRequest(`feed/latest`, "GET", "postuser")
+    }
+    
+    /**
+     * The way for the results to come back.
+     * @typedef {"popular"|"recent"} sorting
+     */
+    /**
+     * Popular posts from a category.
+     * @returns {array&lt;posts>}
+     * @param {string} category The category to fetch.
+     * @param {sorting} [sort=recent] Which way to sort.
+     * 
+     * @example
+     * getByCategory()
+     * .then((res) => res.forEach((post) => post.like()))
+     */
+    getByCategory(category, sort="recent") {
+        return this.baseRequest(`categories/${category}/${sort}`, "GET", "postuser")
+    }
+
+    /**
+     * Searches by name, and returns an array of User objects.
+     * @param {string} name The name you want to search.
+     * @returns {promise&lt;array>}
+     * 
+     * @example
+     * searchByName("cat")
+     * .then((res) => {
+     * res.forEach((item) => console.log(item.id))
+     * })
+     */
+    searchByName(name) {
+        return this.baseRequest(`account/prefix/${name}`, "GET", "user")
+    }
+
+    /**
+     * A local path, or URI path to a Video file.
+     * @typedef {string} videoUrlResolvable 
+     * @example ./myvid.mp4
+     * @example https://www.givememyvideo.com/myvid.mp4
+     */
+    /**
+     * To post a new video to the Client.
+     * @param {videoUrlResolvable} uri The resolvable URL of the video
+     * @param {string} [category="chill"] The category to post to
+     * @param {string} [caption=""] The caption
+     * @returns {post} The post you just created.
+     * @example
+     * .createPost("https://www.mp4url.com/mp4")
+     * .then((res) => console.log(res.videoSrc))
+     * 
+     * @example
+     * .createPost("./file.mp4")
+     * .then((res) => console.log(res.videoSrc))
+     */
+    createPost(uri, caption="", category) {
+        return new Promise(async (resolve, reject) => {
+            if (caption) caption = caption.toLowerCase()
+            let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "video/mp4" })
+            .catch((err) => reject(err))
+
+            let buffer = await resolveSource.resolveBufferFromURL(uri)
+            .catch((err) => reject(err))
+
+            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "raw", { headers:{"Content-Type": "video/mp4"}, body: buffer}, { override: true })
+            .catch((err) => reject(err))
+
+            //let thirdReq = await this.baseRequest("post", "POST", "post", { category: category, videoUploadID: firstReq.data.uploadID, thumbUploadID: firstReq.data.uploadID, caption: caption})
+            //.catch((err) => reject(err))
+            //.then((res) => resolve(res))
+
+            this.baseRequest('post', 'POST', 'post', {
+                category: category,
+                videoUploadID: firstReq.data.uploadID,
+                thumbUploadID: firstReq.data.uploadID,
+                caption: caption
+            })
+            .catch((err) => reject(err))
+            .then((res) => resolve(res))
+            //console.log(await secondReq.body
+        })
+
+    }
+
+    /**
+     * A local path, or URI path to an image.
+     * @typedef {string} imageUrlResolvable 
+     * @example ./myimg.jpg
+     * @example https://www.givememyimage.com/image.jpg
+     */
+    /**
+     * To change the Client's account avatar.
+     * @param {imageUrlResolvable} uri The resolvable URL of the image
+     * @returns {promise&lt;object>}
+     * 
+     * @example
+     * .setAvatar("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
+     * .then((res) => console.log(res))
+     * 
+     * @example
+     * .setAvatar("./image.jpeg")
+     * .then((res) => console.log(res))
+     */
+    setAvatar(uri) {
+        return new Promise(async (resolve, reject) => {
+  
+            let firstReq = await this.baseRequest("upload", "POST", "json", { "contentType": "image/jpeg" })
+            .catch((err) => reject(err))
+  
+            let buffer = await resolveSource.resolveBufferFromURL(uri)
+            .catch((err) => reject(err))
+  
+            let secondReq = await this.baseRequest(firstReq.data.uploadURL, "PUT", "raw", { headers:{"Content-Type": "image/jpeg"}, body: buffer}, { override: true })
+            .catch((err) => reject(err))
+  
+            this.baseRequest('account/me', 'PUT', 'json', { avatarUploadID: firstReq.data.uploadID })
+            .catch((err) => reject(err))
+            .then((res) => resolve(res))
+  
+  
+        })
+    }
 
 }</code></pre>
         </article>
@@ -76,7 +296,7 @@ module.exports = class Client extends HttpHandler {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 29 2020 14:12:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Feb 01 2020 01:14:53 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
