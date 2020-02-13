@@ -44,9 +44,11 @@ class HttpHandler extends EventEmitter {
 
             fetch(finalurl, options)
             .then(async (res) => {
+                console.log(res)
                 switch(res.status) {
-                    case 404: console.log(options); reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
-                    case 429: reject(new Errors.APIError("Too Many Requests. You're being rate limited")); break
+                    case 404: reject(new Errors.APIError("The Endpoint requested doesn't exist.")); break
+                    case 429: reject(new Errors.APIError("Too Many Requests. You're being rate limited.")); break
+                    case 401: reject(new Errors.APIError("This account is unauthorized. Perhaps you've been banned?")); break
 
                     case 200:
                     
