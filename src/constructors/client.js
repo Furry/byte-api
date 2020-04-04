@@ -58,6 +58,15 @@ module.exports = class Client extends HttpHandler {
     }
 
     /**
+     * Gets the user account as a user object.
+     * 
+     * @returns {promise<object>}
+     */
+    getSelf() {
+        return this.baseRequest(`account/me`, "GET", "user")
+    }
+
+    /**
      * Returns all posts in your global feed. Aka all-time HOT posts.
      * @returns {array<posts>}
      * 
