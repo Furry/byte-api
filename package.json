@@ -20,7 +20,7 @@
     "docdash": "^1.2.0",
     "http-proxy-agent": "^4.0.0",
     "https-proxy-agent": "^4.0.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^3.1.1"
   },
   "scripts": {
     "generate-docs": "jsdoc src -r -d docs -t node_modules/docdash"
